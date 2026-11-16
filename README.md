@@ -35,6 +35,40 @@ The HUD shows the score and a live **Orbs Collected** counter in `collected / to
 
 The GameManager owns the score, orb totals, and game state. Victory and Game Over stop the player's Rigidbody motion and show the result panel.
 
+## Game flow
+
+The project currently launches directly into the playable scene and does not include a title screen or separate Start Game menu.
+
+```text
+START → Initialize Game
+  ↓
+W/A/S/D + Arrow Keys + Space + Left Shift + Escape
+  ↓
+PlayerController – movement, acceleration, jump, boost, and rolling torque
+  ↓
+Is Left Shift held while moving?
+  ├─ YES → Activate speed boost
+  └─ NO  → Normal movement speed
+  ↓
+Space pressed?
+  ├─ YES → Is player grounded?
+  │        ├─ YES → Apply jump
+  │        └─ NO  → No jump
+  └─ NO  → Continue gameplay
+  ↓
+Collect silver orb → GameManager updates score and orb count → UIManager updates HUD
+  ↓
+Ball touches spring pad → SpringPad applies upward impulse → Continue gameplay
+  ↓
+Escape pressed?
+  ├─ YES → Toggle Running / Paused
+  └─ NO  → Continue gameplay
+  ↓
+Reach finish gate → Victory
+  ↓
+Touch deadly obstacle / enter losing area / fall below threshold → Game Over
+```
+
 ## Project setup
 
 - **Unity:** `6000.3.8f1`
